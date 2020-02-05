@@ -21,7 +21,8 @@ defmodule Algorithms.Stack do
         send(sender, {:ok, head})
       {:isEmpty, sender} ->
         send(sender, {:ok, Enum.empty?(stack)})
-      {:clear} ->
+      {:clear, sender} ->
+        send(sender, {:ok, []})
         loop([])
     end
     loop(stack)
@@ -51,6 +52,7 @@ defmodule Algorithms.Stack do
     receive do {:ok, isEmpty} -> isEmpty end
   end
   def clear(pid) do
-    send pid, {:clear}
+    send pid, {:clear, self()}
+    receive do {:ok, stack} -> stack end
   end
 end
