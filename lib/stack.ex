@@ -15,7 +15,7 @@ defmodule Algorithms.Stack do
       {:pop, sender} ->
         [head | tail] = stack
         send(sender, {:ok, head})
-        loop(Enum.reverse(tail))
+        loop(tail)
       {:peek, sender} ->
         [head | _] = stack
         send(sender, {:ok, head})
@@ -25,6 +25,7 @@ defmodule Algorithms.Stack do
         send(sender, {:ok, []})
         loop([])
     end
+    IO.puts stack
     loop(stack)
   end
 
@@ -41,7 +42,7 @@ defmodule Algorithms.Stack do
   end
   def pop(pid) do
     send pid, {:pop, self()}
-    receive do {:ok, lastItemDeleted} -> lastItemDeleted end
+    receive do {:ok, itemDeleted} -> itemDeleted end
   end
   def peek(pid) do
     send pid, {:peek, self()}

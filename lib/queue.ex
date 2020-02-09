@@ -12,6 +12,10 @@ defmodule Algorithms.Queue do
         send sender, {:ok, Enum.reverse(stack)}
       {:size, sender} ->
         send sender, {:ok, Enum.count(stack)}
+      {:dequeue, sender} ->
+        [head | tail] = Enum.reverse(stack)
+        send(sender, {:ok, head})
+        loop(Enum.reverse(tail))
     end
     loop(stack)
   end
@@ -25,5 +29,9 @@ defmodule Algorithms.Queue do
   def size(pid) do
     send pid, {:size, self()}
     receive do {:ok, size} -> size end
+  end
+  def dequeue(pid) do
+    send pid, {:dequeue, self()}
+    receive do {:ok, itemDeleted} -> itemDeleted end
   end
 end

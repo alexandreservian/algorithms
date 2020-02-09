@@ -30,5 +30,13 @@ defmodule AlgorithmsTest.Queue do
       Queue.enqueue pid, 17
       assert Queue.show(pid) == [15,17]
     end
+
+    test "Algorithms.Queue.dequeue: should remove last element it's 27" do
+      {:ok, pid} = Queue.start_link
+      Queue.enqueue pid, 15
+      Queue.enqueue pid, 50
+      Queue.enqueue pid, 27
+      assert Queue.dequeue(pid) == 15
+    end
   end
 end
