@@ -38,5 +38,33 @@ defmodule AlgorithmsTest.Queue do
       Queue.enqueue pid, 27
       assert Queue.dequeue(pid) == 15
     end
+
+    test "Algorithms.Queue.peek: should return 50" do
+      {:ok, pid} = Queue.start_link
+      Queue.enqueue pid, 15
+      Queue.enqueue pid, 78
+      Queue.enqueue pid, 50
+      assert Queue.peek(pid) == 15
+    end
+
+    test "Algorithms.Queue.isEmpty: should return true" do
+      {:ok, pid} = Queue.start_link
+      assert Queue.isEmpty(pid) == true
+    end
+
+    test "Algorithms.Queue.isEmpty: should return false" do
+      {:ok, pid} = Queue.start_link
+      Queue.enqueue pid, 19
+      assert Queue.isEmpty(pid) == false
+    end
+
+    test "Algorithms.Queue.clear: should return []" do
+      {:ok, pid} = Queue.start_link
+      Queue.enqueue pid, 16
+      Queue.enqueue pid, 19
+      Queue.enqueue pid, 17
+      Queue.enqueue pid, 13
+      assert Queue.clear(pid) == []
+    end
   end
 end

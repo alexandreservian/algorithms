@@ -25,7 +25,6 @@ defmodule Algorithms.Stack do
         send(sender, {:ok, []})
         loop([])
     end
-    IO.puts stack
     loop(stack)
   end
 

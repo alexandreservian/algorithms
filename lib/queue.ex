@@ -16,6 +16,14 @@ defmodule Algorithms.Queue do
         [head | tail] = Enum.reverse(stack)
         send(sender, {:ok, head})
         loop(Enum.reverse(tail))
+      {:peek, sender} ->
+        [head | _] = Enum.reverse(stack)
+        send sender, {:ok, head}
+      {:isEmpty, sender} ->
+        send(sender, {:ok, Enum.empty?(stack)})
+      {:clear, sender} ->
+        send(sender, {:ok, []})
+        loop([])
     end
     loop(stack)
   end
@@ -33,5 +41,17 @@ defmodule Algorithms.Queue do
   def dequeue(pid) do
     send pid, {:dequeue, self()}
     receive do {:ok, itemDeleted} -> itemDeleted end
+  end
+  def peek(pid) do
+    send pid, {:peek, self()}
+    receive do {:ok, firstItem} -> firstItem end
+  end
+  def isEmpty(pid) do
+    send pid, {:isEmpty, self()}
+    receive do {:ok, isEmpty} -> isEmpty end
+  end
+  def clear(pid) do
+    send pid, {:clear, self()}
+    receive do {:ok, stack} -> stack end
   end
 end
