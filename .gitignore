@@ -24,4 +24,4 @@ algorithms-*.tar
 
 /.vscode/
 
-/.elixir_ls/
+.elixir_ls/

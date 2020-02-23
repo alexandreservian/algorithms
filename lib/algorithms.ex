@@ -1,10 +1,6 @@
 defmodule Algorithms do
-  defp convertBase({0, _}) do
-    "0"
-  end
-  defp convertBase({1, concatBinary}) do
-    "1#{concatBinary}"
-  end
+  defp convertBase({0, _}), do: "0"
+  defp convertBase({1, concatBinary}), do: "1#{concatBinary}"
   defp convertBase({number, concatBinary}) do
     nextNumber = div number, 2
     binary = rem number, 2
@@ -51,5 +47,10 @@ defmodule Algorithms do
 
   def fizzBuzzCollection(number) do
     fizzBuzzRecursive(number)
+  end
+  def factorial(0), do: 1
+  def factorial(1), do: 1
+  def factorial(number) when is_integer(number) do
+    number * factorial number - 1
   end
 end
